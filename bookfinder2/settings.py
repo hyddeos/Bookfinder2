@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "bfapp",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,42 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
+
+CSRF_COOKIE_SECURE = os.environ.get("IN_PRODUCTION")
+
+CORS_ALLOWED_ORIGINS = [
+    os.environ.get("DJANGO_TRUSTED_URLS"),
+]
+CSRF_TRUSTED_ORIGINS = [os.environ.get("DJANGO_TRUSTED_URLS")]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "hx-request",
+    "hx-current-url",
+    "hx-target",
+]
+
+CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_HTTPONLY = True
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ]
+}
+
 
 ROOT_URLCONF = "bookfinder2.urls"
 

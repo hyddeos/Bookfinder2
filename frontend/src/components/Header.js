@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
+import bookfinder_logo from "../assets/bookfinder_logo.svg";
+import HandleLogin from "./HandleLogin.js";
+import HandleLogout from "./HandleLogout";
 
 export default function Header(props) {
   const [showLogin, setShowlogin] = React.useState(false);
-  const [errorMsg, setErrorMsg] = React.useState("");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -14,15 +17,6 @@ export default function Header(props) {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // If there is a log-in error, show the login screen.
-  useEffect(() => {
-    if (props.error) {
-      console.log("in", errorMsg);
-      setShowlogin("open");
-      setErrorMsg("Invalid username or password.");
-    }
-  }, []);
-
   function clickShowLogin() {
     if (!showLogin) {
       setShowlogin("open");
@@ -30,6 +24,13 @@ export default function Header(props) {
       setShowlogin(false);
     }
   }
+
+  const clickLogout = () => {
+    HandleLogout();
+    props.setHasAccessToken(false);
+  };
+
+  console.log("HasToken in Header", props.hasAccessToken);
 
   return (
     <nav className="py-4">
@@ -89,19 +90,18 @@ export default function Header(props) {
                 UPDATE SERVICES
               </a>
             </div>
-            {props.user ? (
+            {props.hasAccessToken ? (
               <div className="p-6 block">
-                <a href="/logout">
-                  <button
-                    className="inline-block text-sm px-4 py-2 leading-none
+                <button
+                  onClick={clickLogout}
+                  className="inline-block text-sm px-4 py-2 leading-none
                     border-2 border-acc
                    hover:bg-acc hover:text-white
                     rounded text-acc 
                     font-header md:mt-4 lg:mt-0"
-                  >
-                    LOGOUT
-                  </button>
-                </a>
+                >
+                  LOGOUT
+                </button>
               </div>
             ) : (
               <div className="p-6 block">
@@ -128,8 +128,8 @@ export default function Header(props) {
         )}
       </div>
       <div className="w-full m-auto flex justify-around flex-grow lg:flex lg:items-center mt-2 lg:w-auto ">
-        <div className="flex items-center flex-shrink-0 w-64 pl-3 md:pb-3">
-          <img src="https://svgshare.com/i/uZ0.svg" alt="bookfinder logo" />
+        <div className="flex items-center flex-shrink-0 w-48 pl-3 md:pb-3">
+          <img src={bookfinder_logo} alt="bookfinder logo" />
         </div>
         <div className="w-2/4 text-center md:flex justify-around mx-2 lg:flex-grow hidden">
           <div>
@@ -159,6 +159,7 @@ export default function Header(props) {
               <div className="origin-top-right absolute -right-11 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-dark ring-opacity-5 divide-y divide-dark">
                 <div className="p-3">
                   <a
+                    onClick={toggleDropdown}
                     href="/readlist"
                     className="block font-header lg:inline-block lg:mt-0  hover:text-prim text-dark"
                   >
@@ -167,6 +168,7 @@ export default function Header(props) {
                 </div>
                 <div className="p-3">
                   <a
+                    onClick={toggleDropdown}
                     href="/maybelist"
                     className="block font-header lg:inline-block lg:mt-0  hover:text-prim text-dark"
                   >
@@ -175,8 +177,9 @@ export default function Header(props) {
                 </div>
                 <div className="p-3">
                   <a
+                    onClick={toggleDropdown}
                     href="/notlist"
-                    className="block font-header mt-4 lg:inline-block lg:mt-0  hover:text-prim text-dark"
+                    className="block font-header lg:inline-block lg:mt-0  hover:text-prim text-dark"
                   >
                     NOT LIST
                   </a>
@@ -193,19 +196,18 @@ export default function Header(props) {
             </a>
           </div>
         </div>
-        {props.user ? (
+        {props.hasAccessToken ? (
           <div className="pr-3 md:block hidden">
-            <a href="/logout">
-              <button
-                className="inline-block text-sm px-4 py-2 leading-none
+            <button
+              onClick={clickLogout}
+              className="inline-block text-sm px-4 py-2 leading-none
                     border-2 border-acc
                    hover:bg-acc hover:text-white
                     rounded text-acc 
                     font-header mt-4 lg:mt-0"
-              >
-                LOGOUT
-              </button>
-            </a>
+            >
+              LOGOUT
+            </button>
           </div>
         ) : (
           <div className="pr-3 md:block hidden">
@@ -225,89 +227,17 @@ export default function Header(props) {
         open={showLogin ? "open" : false}
         className="z-50 fixed top-1/4 bg-prim rounded-md border-8 border-dark shadow-xl"
       >
-        <div className="absolute top-2 right-8">
+        {" "}
+        <div className="absolute top-2 right-0 mr-8">
           <button onClick={clickShowLogin} className="text-acc">
             Close
           </button>
         </div>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 ">
-          <div className="mx-auto max-w-lg">
-            <h1 className="text-center text-2xl font-bold text-dark font-header sm:text-3xl">
-              LOG IN TO FIND YOUR NEXT BOOK
-            </h1>
-
-            <p className="mx-auto mt-4 text-dark font-body max-w-md text-center">
-              By logging in you will be see whats new and start to choose what
-              makes it into your very own{" "}
-              <span className="italic">to-read-list.</span>
-              <br></br> <span className="font-bold">Happy book hunting!</span>
-            </p>
-
-            <form
-              method="post"
-              action="/login"
-              className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 bg-white"
-            >
-              <p className="text-center text-lg font-medium">
-                Sign in to your account
-              </p>
-
-              <div>
-                <label htmlFor="username" className="sr-only">
-                  Username
-                </label>
-
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    required
-                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Enter username"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-
-                <div className="relative">
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Enter password"
-                  />
-                </div>
-                <p className="text-error font-bold ml-2 mt-1">{errorMsg}</p>
-              </div>
-              <div className="flex justify-center">
-                {" "}
-                <button
-                  type="submit"
-                  className="inline-block text-sm px-8 py-2 leading-none
-                bg-dark hover:bg-prim
-                rounded text-prim hover:text-white
-                font-header mt-4 lg:mt-0"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
-            <p className="text-center text-sm text-dark mt-2 font-bold mx-2">
-              No account?{"  "}
-              <a className="underline" href="">
-                Sign up
-              </a>
-              {"   "}(not enabled atm)
-            </p>
-          </div>
-        </div>
+        <HandleLogin
+          csrftoken={props.csrftoken}
+          setShowlogin={setShowlogin}
+          setHasAccessToken={props.setHasAccessToken}
+        />
       </dialog>
     </nav>
   );

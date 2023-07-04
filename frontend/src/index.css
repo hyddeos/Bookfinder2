@@ -1,12 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,900;1,900&family=Martel&family=PT+Serif:ital@0;1&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 html,
 body {
+  background-color: #e7e3d0;
   height: 100%;
 }
 
