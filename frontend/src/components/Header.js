@@ -3,21 +3,28 @@ import React, { useState } from "react";
 import bookfinder_logo from "../assets/bookfinder_logo.svg";
 import HandleLogin from "./HandleLogin.js";
 import HandleLogout from "./HandleLogout";
+import UpdateServices from "./UpdateServices";
 
 export default function Header(props) {
   const [showLogin, setShowlogin] = React.useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Show-Hide user books lists menu
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
+  // Show-Hide mobile menu
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Show-Hide Login menu
   function clickShowLogin() {
+    if (toggleMobileMenu) {
+      toggleMobileMenu();
+    }
     if (!showLogin) {
       setShowlogin("open");
     } else {
@@ -25,19 +32,26 @@ export default function Header(props) {
     }
   }
 
+  // Logout user
   const clickLogout = () => {
+    if (toggleMobileMenu) {
+      toggleMobileMenu();
+    }
     HandleLogout();
     props.setHasAccessToken(false);
   };
 
-  console.log("HasToken in Header", props.hasAccessToken);
+  // Update book services
+  const clickUpdateservices = () => {
+    UpdateServices(props.csrftoken);
+  };
 
   return (
     <nav className="py-4">
       <div className="block lg:hidden">
         <button
           onClick={toggleMobileMenu}
-          className="absolute top-9 left-3 flex md:hidden items-center px-3 py-2 border-dark border rounded-lg h-12 w-12"
+          className="absolute top-10 left-0 flex md:hidden items-center px-3 py-2 ml-6 mt-4 border-dark border rounded-lg h-12 w-12"
         >
           <svg
             className="fill-current h-6 w-6"
@@ -83,12 +97,12 @@ export default function Header(props) {
               </a>
             </div>
             <div className="p-6">
-              <a
-                href="/updatebooks"
-                className="block font-header  lg:inline-block lg:mt-0  hover:text-prim text-dark"
+              <p
+                onClick={clickUpdateservices}
+                className="block font-header  lg:inline-block lg:mt-0  hover:text-prim text-dark cursor-pointer"
               >
                 UPDATE SERVICES
-              </a>
+              </p>
             </div>
             {props.hasAccessToken ? (
               <div className="p-6 block">
@@ -119,7 +133,7 @@ export default function Header(props) {
             <div className="p-6">
               <p
                 onClick={toggleMobileMenu}
-                className="block font-header  lg:inline-block lg:mt-0 text-acc hover:text-prim  "
+                className="block font-header cursor-pointer lg:inline-block lg:mt-0 text-acc hover:text-prim  "
               >
                 Close Menu
               </p>
@@ -188,12 +202,12 @@ export default function Header(props) {
             )}
           </div>
           <div>
-            <a
-              href="/updatebooks"
-              className="block font-header mt-4 lg:inline-block lg:mt-0  hover:text-prim mr-4 text-dark"
+            <p
+              onClick={clickUpdateservices}
+              className="block font-header mt-4 lg:inline-block lg:mt-0  hover:text-prim mr-4 text-dark cursor-pointer"
             >
               UPDATE SERVICES
-            </a>
+            </p>
           </div>
         </div>
         {props.hasAccessToken ? (

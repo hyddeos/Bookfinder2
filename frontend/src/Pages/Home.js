@@ -1,9 +1,13 @@
 import React from "react";
+import WelcomeHero from "../components/WelcomeHero";
+import WelcomeUsps from "../components/WelcomeUsps";
+import ListBooksSample from "../components/ListBooksSample";
 
 export default function Home(props) {
   return (
     <div className="block m-auto my-12">
-      <h1 className="text-acc">This is home</h1>
+      <WelcomeHero />
+      <WelcomeUsps />
     </div>
   );
 }

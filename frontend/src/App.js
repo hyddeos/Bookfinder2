@@ -48,7 +48,6 @@ function App() {
       window.removeEventListener("storage", checkAccessToken);
     };
   }, []);
-  console.log("acces", hasAccessToken);
 
   return (
     <BrowserRouter>
@@ -61,7 +60,7 @@ function App() {
           />
           <div className="content">
             <Routes>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" element={<Home />} />
             </Routes>
           </div>
           <footer className="bg-gray-200 text-center">

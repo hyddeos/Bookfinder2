@@ -1,8 +1,11 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User, AbstractUser
+
+User = get_user_model()
 
 
 class User(AbstractUser):
@@ -10,7 +13,16 @@ class User(AbstractUser):
     user_permissions = None
 
     def __str__(self):
-        return self.username
+        return self.pk, self.username
+
+
+class AccessToken(models.Model):
+    username = models.CharField(max_length=64, default="--")
+    userpk = models.IntegerField(default=0)
+    access_token = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.access_token
 
 
 class UserList(models.Model):

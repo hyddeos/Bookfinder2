@@ -1,11 +1,13 @@
 import json
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib import messages
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
 
 
 # Own functions
@@ -15,7 +17,7 @@ from bfapp.assets.load_from_db import load_sample_books
 from bfapp.assets.load_from_db import load_filterd_books
 
 # Models
-from bfapp.models import *
+from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 
 
 # Create your views here.
@@ -66,6 +68,7 @@ def handle_login(request):
             csrf_token = request.META.get("HTTP_X_CSRFTOKEN")
             if not csrf_token:
                 return JsonResponse({"message": "CSRF token not provided"}, status=403)
+            print("handling login")
 
             data = json.loads(request.body)
             username = data.get("username")
@@ -73,9 +76,23 @@ def handle_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                User = get_user_model()
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
+                user_authed = User.objects.get(username=user.username)
                 refresh_token = str(refresh)
+                try:
+                    user_has_access_token = AccessToken.objects.get(
+                        username=user_authed
+                    )
+                    user_has_access_token.access_token = access_token
+                    user_has_access_token.save()
+                except AccessToken.DoesNotExist:
+                    user_first_time = AccessToken(
+                        username=user, userpk=user.pk, access_token=access_token
+                    )
+                    user_first_time.save()
+
                 print("--Login succesful--")
                 return JsonResponse(
                     {
@@ -98,3 +115,29 @@ def handle_logout(request):
     logout(request)
     print("--Logout successful--")
     return JsonResponse({"message": "Logout successful"})
+
+
+# Update the books from the book services
+@csrf_exempt
+def update_books(request):
+    if request.method == "POST":
+        csrf_token = request.META.get("HTTP_X_CSRFTOKEN")
+        if not csrf_token:
+            return JsonResponse({"message": "CSRF token not provided"}, status=403)
+        print("-2-")
+        access_token = request.META.get("HTTP_AUTHORIZATION", "").split(" ")[1]
+        try:
+            user = AccessToken.objects.get(access_token=access_token)
+            print("user", user.username)
+            if user.username == "hydde":  # Fix usergroup for this
+                print("--Starting update--")
+                get_books()
+                print("--UPDATE DONE--")
+                return HttpResponse("Update completed")
+        except AccessToken.DoesNotExist:
+            return HttpResponse("Unauthorized", status=401)
+
+        return HttpResponse("Invalid token", status=401)
+
+    else:
+        return JsonResponse({"message": "Method not allowed"}, status=405)

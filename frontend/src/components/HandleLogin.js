@@ -5,6 +5,7 @@ import { API_URL } from "../constants";
 
 export default function HandleLogin(props) {
   const [errorMessage, setErrorMessage] = React.useState("");
+  const formRef = React.useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -29,17 +30,19 @@ export default function HandleLogin(props) {
       .then((data) => {
         if (data.message === "Invalid credentials") {
           setErrorMessage("Wrong Username or Password");
+          formRef.current.reset();
         } else if (data.message === "Login successful") {
           Cookies.set("access_token", data.access_token);
           Cookies.set("refresh_token", data.refresh_token);
           props.setHasAccessToken(true);
           setErrorMessage("");
           props.setShowlogin(false);
+          formRef.current.reset();
         }
-        console.log(data);
       })
       .catch((error) => {
         console.error(error);
+        formRef.current.reset();
       });
   };
 
@@ -60,6 +63,7 @@ export default function HandleLogin(props) {
 
           <form
             onSubmit={handleSubmit}
+            ref={formRef}
             className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 bg-white"
           >
             <p className="text-center text-lg font-medium">

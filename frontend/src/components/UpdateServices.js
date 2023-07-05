@@ -1,20 +1,21 @@
 import Cookies from "js-cookie";
-
 import { API_URL } from "../constants";
 
-export default function HandleLogout(props) {
-  fetch(`${API_URL}/logout`, {
+export default function UpdateServices(props) {
+  const accessToken = Cookies.get("access_token");
+  console.log("cshtr token");
+
+  fetch(`${API_URL}/updateservices`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-CSRFToken": props.csrftoken,
+      Authorization: `Bearer ${accessToken}`,
     },
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.message === "Logout successful") {
-        Cookies.remove("access_token");
-        console.log("Logout successful");
-      }
+      console.log("Updated");
     })
     .catch((error) => {
       console.error(error);
