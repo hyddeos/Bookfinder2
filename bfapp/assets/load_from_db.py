@@ -2,6 +2,7 @@ from bfapp.models import Book, Genre, User, UserBook, UserList, Publisher
 from django.core import serializers
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import JsonResponse
 
 
 def load_books(user, page_number, list_type):
@@ -65,7 +66,7 @@ def load_books(user, page_number, list_type):
 
 
 def load_sample_books():
-    sample_book_ids = [1433, 1342, 1364, 990, 1479, 1249]
+    sample_book_ids = [1, 2, 3, 3, 5, 6]
     books = (
         Book.objects.filter(id__in=sample_book_ids)
         .prefetch_related("publisher")
@@ -74,7 +75,7 @@ def load_sample_books():
     serialized_books = serializers.serialize(
         "json", books, use_natural_foreign_keys=True
     )
-    return {"books": serialized_books}
+    return JsonResponse({"books": serialized_books})
 
 
 def load_filterd_books(user, page_number, search_terms):

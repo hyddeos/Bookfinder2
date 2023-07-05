@@ -8,6 +8,7 @@ export default function Home(props) {
     <div className="block m-auto my-12">
       <WelcomeHero />
       <WelcomeUsps />
+      <ListBooksSample />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import bookfinder_logo from "../assets/bookfinder_logo.svg";
 import HandleLogin from "./HandleLogin.js";
@@ -7,8 +7,8 @@ import UpdateServices from "./UpdateServices";
 
 export default function Header(props) {
   const [showLogin, setShowlogin] = React.useState(false);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   // Show-Hide user books lists menu
   const toggleDropdown = () => {

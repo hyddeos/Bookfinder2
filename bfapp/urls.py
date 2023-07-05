@@ -6,6 +6,7 @@ urlpatterns = [
     path("updateservices", views.update_books),  # update services
     path("login", views.handle_login),
     path("logout", views.handle_logout),
+    path("samplebooks", views.sample_books)
     # path("update", views.handle_user_book),  # update user books
     # path("readlist", views.readlist),
     # path("maybelist", views.maybelist),

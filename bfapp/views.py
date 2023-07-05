@@ -141,3 +141,10 @@ def update_books(request):
 
     else:
         return JsonResponse({"message": "Method not allowed"}, status=405)
+
+
+@csrf_exempt
+def sample_books(request):
+    sample = load_sample_books()
+    print("sample", sample)
+    return sample

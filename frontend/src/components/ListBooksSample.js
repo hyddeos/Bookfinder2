@@ -1,9 +1,30 @@
 import React from "react";
+import { API_URL } from "../constants";
 
-export default function ListBooksSample(props) {
+export default function ListBooksSample() {
+  const [books, setBooks] = React.useState([]);
   const [readThis, setReadThis] = React.useState([]);
   const [readMaybe, setReadMaybe] = React.useState([]);
   const [readNot, setReadNot] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch(`${API_URL}/samplebooks`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("dataaaaa", data);
+        const jsondata = JSON.parse(data.books);
+        setBooks(jsondata);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  console.log("books", books);
 
   function handleClick(key, list) {
     // Check if key already added
@@ -43,7 +64,7 @@ export default function ListBooksSample(props) {
       </div>
       <div className="max-w-6xl mx-2 ">
         <div className="flex justify-center"></div>
-        {props.bookData.books.map((book) => (
+        {books.map((book) => (
           <div key={book.pk} className="my-4 ">
             <div className="flex h-56 md:max-h-60 border-t-4 border-l-4 border-r-4 border-acc rounded-t-xl bg-white overflow-hidden">
               <div className="max-w-6xl object-scale-down bg-prim w-full md:w-1/5">
