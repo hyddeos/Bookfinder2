@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,8 @@ CORS_ALLOWED_ORIGINS = [
     os.environ.get("DJANGO_TRUSTED_URLS"),
 ]
 CSRF_TRUSTED_ORIGINS = [os.environ.get("DJANGO_TRUSTED_URLS")]
+CORS_ORIGIN_WHITELIST = [os.environ.get("DJANGO_TRUSTED_URLS")]
+
 
 CORS_ALLOW_HEADERS = [
     "accept",
@@ -82,6 +85,7 @@ CORS_ALLOW_HEADERS = [
     "hx-request",
     "hx-current-url",
     "hx-target",
+    "accesstoken",
 ]
 
 CSRF_COOKIE_NAME = "csrftoken"

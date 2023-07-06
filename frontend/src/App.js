@@ -6,6 +6,7 @@ import { API_URL } from "./constants";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./Pages/Home";
+import BookHunt from "./Pages/BookHunt";
 
 function App() {
   const [csrfToken, setCsrfToken] = useState("");
@@ -61,6 +62,11 @@ function App() {
           <div className="content">
             <Routes>
               <Route exact path="/" element={<Home />} />
+              <Route
+                exact
+                path="/bookhunt"
+                element={<BookHunt csrfToken={csrfToken} />}
+              />
             </Routes>
           </div>
           <footer className="bg-gray-200 text-center">

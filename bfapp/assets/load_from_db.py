@@ -78,7 +78,7 @@ def load_sample_books():
     return JsonResponse({"books": serialized_books})
 
 
-def load_filterd_books(user, page_number, search_terms):
+def load_filterd_books(user, page_number, search_terms, list_type):
     books_per_page = 50
     book_ids = []
     total_books = 0
@@ -89,16 +89,19 @@ def load_filterd_books(user, page_number, search_terms):
     ).values_list("id", flat=True)
 
     if user:
-        user_lists = UserList.objects.filter(user=user)
-        for user_list in user_lists:
-            book_ids.extend(user_list.books_on_all_lists())
-        queryset = Book.objects.all().prefetch_related("publisher")
-        queryset = queryset.exclude(id__in=book_ids)
-        q_filter = Q()
-        if include_publishers:
-            q_filter &= Q(publisher__name__in=include_publishers)
-        if exclude_publishers:
-            q_filter &= ~Q(publisher__name__in=exclude_publishers)
+        print("1")
+        if list_type == "undesided":
+            print("2")
+            user_lists = UserList.objects.filter(user=user)
+            for user_list in user_lists:
+                book_ids.extend(user_list.books_on_all_lists())
+            queryset = Book.objects.all().prefetch_related("publisher")
+            queryset = queryset.exclude(id__in=book_ids)
+            q_filter = Q()
+            if include_publishers:
+                q_filter &= Q(publisher__name__in=include_publishers)
+            if exclude_publishers:
+                q_filter &= ~Q(publisher__name__in=exclude_publishers)
 
         queryset = queryset.filter(q_filter)
         total_books = len(queryset)

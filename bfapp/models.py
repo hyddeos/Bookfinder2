@@ -8,7 +8,7 @@ from django.contrib.auth.models import User, AbstractUser
 User = get_user_model()
 
 
-class User(AbstractUser):
+class CustomUser(AbstractUser):
     groups = None
     user_permissions = None
 
@@ -17,8 +17,7 @@ class User(AbstractUser):
 
 
 class AccessToken(models.Model):
-    username = models.CharField(max_length=64, default="--")
-    userpk = models.IntegerField(default=0)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     access_token = models.CharField(max_length=255)
 
     def __str__(self):

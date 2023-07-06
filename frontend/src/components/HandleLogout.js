@@ -13,6 +13,7 @@ export default function HandleLogout(props) {
     .then((data) => {
       if (data.message === "Logout successful") {
         Cookies.remove("access_token");
+        window.location.href = "/";
         console.log("Logout successful");
       }
     })

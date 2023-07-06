@@ -38,6 +38,7 @@ export default function HandleLogin(props) {
           setErrorMessage("");
           props.setShowlogin(false);
           formRef.current.reset();
+          window.location.reload();
         }
       })
       .catch((error) => {

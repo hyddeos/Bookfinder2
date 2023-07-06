@@ -74,6 +74,14 @@ export default function Header(props) {
             </div>
             <div className="p-6">
               <a
+                href="/bookhunt"
+                className="block font-header lg:inline-block lg:mt-0  hover:text-prim text-dark"
+              >
+                BOOK HUNT
+              </a>
+            </div>
+            <div className="p-6">
+              <a
                 href="/readlist"
                 className="block font-header lg:inline-block lg:mt-0  hover:text-prim text-dark"
               >
@@ -156,10 +164,10 @@ export default function Header(props) {
           </div>
           <div>
             <a
-              href="/browse"
+              href="/bookhunt"
               className="block font-header mt-4 lg:inline-block lg:mt-0  hover:text-prim mr-4 text-dark"
             >
-              BROWSE
+              BOOK HUNT
             </a>
           </div>
           <div className="relative">

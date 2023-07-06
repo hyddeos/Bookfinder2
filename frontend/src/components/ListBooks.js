@@ -1,30 +1,74 @@
 import React from "react";
+import Cookies from "js-cookie";
 import { API_URL } from "../constants";
 
-export default function ListBooksSample() {
+import Pagination from "../components/Pagination";
+
+export default function Home(props) {
   const [books, setBooks] = React.useState([]);
+  const [pages, setPages] = React.useState([]);
+  const [totalBooks, setTotalBooks] = React.useState("");
   const [readThis, setReadThis] = React.useState([]);
   const [readMaybe, setReadMaybe] = React.useState([]);
   const [readNot, setReadNot] = React.useState([]);
+  const accessToken = Cookies.get("access_token");
 
   React.useEffect(() => {
-    fetch(`${API_URL}/samplebooks`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const url = new URL(`${API_URL}/browse`);
+    const params = new URLSearchParams(window.location.search);
+    url.search = new URLSearchParams(params).toString();
+
+    const headers = {
+      "Content-Type": "application/json",
+      "X-CSRFToken": props.csrfToken,
+    };
+
+    if (accessToken) {
+      headers["accesstoken"] = accessToken;
+    }
+
+    fetch(url, {
+      method: "POST",
+      headers: headers,
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data", data);
-
-        const jsondata = JSON.parse(data.books);
-        setBooks(jsondata);
+        setBooks(data.books);
+        setPages(data.pages);
+        setTotalBooks(data.total_books);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
+  function updateBook(key, list) {
+    if (accessToken) {
+      const data = {
+        readList: list,
+        key: key,
+      };
+      fetch(`${API_URL}/bookaction`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": props.csrfToken,
+          accesstoken: accessToken,
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("OK");
+          } else {
+            console.log("not Ok");
+          }
+        })
+        .catch((error) => {
+          console.log("some error", error);
+        });
+    }
+  }
 
   function handleClick(key, list) {
     // Check if key already added
@@ -48,21 +92,15 @@ export default function ListBooksSample() {
         setReadNot((prevReadNot) => [...prevReadNot, key]);
       }
     }
+    updateBook(key, list);
   }
 
   return (
     <div className="content mb-7 bg-light">
-      <div className="bg-gradient-to-b from-dark to-light h-18">
-        <h3 className="text-prim font-header text-8xl text-center ">
-          HERE´S HOW IT WORKS
-        </h3>
-        <h5 className="text-dark font-ingress font-bold text-center">
-          Well, on these sample books, your preferences won't be saved, but at
-          least you will get an idea of how it will work. For the best experince
-          you should use a desktop device.
-        </h5>
-      </div>
-      <div className="max-w-6xl mx-2 ">
+      <div className="max-w-6xl mx-2">
+        <div className="flex justify-center">
+          <Pagination pages={pages} total={totalBooks} />
+        </div>
         {books.map((book) => (
           <div key={book.pk} className="my-4 ">
             <div className="flex h-56 md:max-h-60 border-t-4 border-l-4 border-r-4 border-acc rounded-t-xl bg-white overflow-hidden">
@@ -159,7 +197,9 @@ export default function ListBooksSample() {
             </div>
           </div>
         ))}
-        <div className="flex justify-center"></div>
+        <div className="flex justify-center">
+          <Pagination pages={pages} total={totalBooks} />
+        </div>
       </div>
     </div>
   );
