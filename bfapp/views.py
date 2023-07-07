@@ -6,8 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 
 
 # Own functions
@@ -25,13 +23,6 @@ from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 # Create your views here.
 def index(request):
     csrf_token = get_token(request)
-
-    username = os.environ.get("SUPER_USERNAME")  # Replace with the desired username
-    password = os.environ.get("SUPER_PASSWORD")  # Replace with the desired password
-    email = os.environ.get("SUPER_EMAIL")  # Replace with the desired email
-    User.objects.create_superuser(username=username, password=password, email=email)
-
-    print("Superuser created successfully.")
 
     response_data = {
         # "serialized_data": serialized_data,
