@@ -4,7 +4,7 @@ export default function Footer(props) {
   const year = new Date().getFullYear();
   return (
     <div className="flex bg-acc max-w-6xl">
-      <div className="flex flex-wrap text-center font-header font-thin justify-evenly text-light m-auto">
+      <div className="w-full flex flex-wrap justify-evenly text-center font-header font-thin text-light m-auto">
         <div className="m-2 opacity-100">
           <a href="/" className="font-bold text-prim">
             Bookfinder
@@ -18,9 +18,9 @@ export default function Footer(props) {
           </a>
         </div>
         <div className="m-2 opacit">
-          Visit me at{" "}
+          Project at{" "}
           <a
-            href="https://github.com/hyddeos/bookfinder"
+            href="https://github.com/hyddeos/Bookfinder2"
             className="font-bold text-prim"
           >
             Github

@@ -7,14 +7,14 @@ export default function WelcomeHero(props) {
         <h2 className="font-header text-left text-dark text-3xl px-4  ">
           WELCOME <span className="text-succes italic">YOU</span>
         </h2>
-        <h3 className="font-header text-dark text-8xl text-left px-4">
+        <h3 className="font-header text-dark text-4xl md:text-8xl text-left px-4">
           <span className="">LOVER </span>
           <span className="font-ingress italic text-4xl">of</span>
         </h3>
-        <h3 className="font-header text-dark text-5xl md:text-8xl text-left md:text-center px-4">
+        <h3 className="font-header text-dark text-4xl md:text-8xl md:text-8xl text-left md:text-center px-4">
           <span className="text-acc">KNOWLEDGE</span>
         </h3>
-        <h3 className="font-header text-dark text-6xl md:text-8xl text-left md:text-right px-4">
+        <h3 className="font-header text-dark text-3xl md:text-8xl text-left md:text-right px-4">
           <span className="font-ingress italic text-4xl">and </span>
           <span> CURIOSITY </span>
         </h3>

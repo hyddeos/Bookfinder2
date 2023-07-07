@@ -63,7 +63,7 @@ export default function Header(props) {
           </svg>
         </button>
         {isMobileMenuOpen && (
-          <div className="origin-top-left absolute left-0 top-20 mt-4 w-full rounded-md shadow-lg bg-white ring-1 ring-dark ring-opacity-5 divide-y divide-dark">
+          <div className="origin-top-left absolute left-0 top-0 mt-20 w-full rounded-md shadow-lg bg-white ring-1 ring-dark ring-opacity-5 divide-y divide-dark">
             <div className="p-6">
               <a
                 href="/"
@@ -178,7 +178,7 @@ export default function Header(props) {
               <span className="mr-2">MY LISTS 🠋</span>
             </button>
             {isDropdownOpen && (
-              <div className="origin-top-right absolute -right-11 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-dark ring-opacity-5 divide-y divide-dark">
+              <div className="absolute mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-dark ring-opacity-5 divide-y divide-dark">
                 <div className="p-3">
                   <a
                     onClick={toggleDropdown}
@@ -247,7 +247,7 @@ export default function Header(props) {
       </div>
       <dialog
         open={showLogin ? "open" : false}
-        className="z-50 fixed top-1/4 bg-prim rounded-md border-8 border-dark shadow-xl"
+        className="z-50 fixed mt-20  bg-prim rounded-md border-8 border-dark shadow-xl"
       >
         {" "}
         <div className="absolute top-2 right-0 mr-8">

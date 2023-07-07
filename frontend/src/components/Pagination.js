@@ -2,14 +2,14 @@ import React from "react";
 
 export default function Pagination(props) {
   return (
-    <div className="flex w-full">
+    <div className="flex w-full justify-center">
       {props.pages.has_previous_page && (
         <a href={`?page=${props.pages.previous_page_number}`}>
           <button
             className="inline-block h-8 w-24 text-sm leading-none
             bg-acc hover:bg-prim
             rounded text-white 
-            font-header md:mt-4 lg:mt-0"
+            font-header "
           >
             PREVIOUS
           </button>
@@ -26,7 +26,7 @@ export default function Pagination(props) {
             className="inline-block h-8 w-24 text-sm leading-none
             bg-acc hover:bg-prim
             rounded text-white  align
-            font-header md:mt-4 lg:mt-0"
+            font-header"
           >
             NEXT
           </button>

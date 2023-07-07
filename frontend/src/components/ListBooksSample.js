@@ -50,14 +50,21 @@ export default function ListBooksSample() {
 
   return (
     <div className="content mb-7 bg-light">
-      <div className="bg-gradient-to-b from-dark to-light h-18">
-        <h3 className="text-prim font-header text-8xl text-center ">
-          HERE´S HOW IT WORKS
+      <div className="bg-gradient-to-b from-dark to-light h-10"></div>
+      <div className="bg-light h-18 m-4">
+        <h3 className="text-acc font-header text-6xl text-center ">
+          SEE IT IN ACTION
         </h3>
-        <h5 className="text-dark font-ingress font-bold text-center">
+        <h5 className="text-dark font-ingress font-bold text-center max-w-xl m-auto">
           Well, on these sample books, your preferences won't be saved, but at
-          least you will get an idea of how it will work. For the best experince
-          you should use a desktop device.
+          least you will get an idea of how it works. For the best experince you
+          should use a desktop device.
+        </h5>
+        <h5 className="text-dark font-ingress font-bold text-center max-w-xl m-auto">
+          If you need even more infomation about the book, just click the title
+          and you will be directed to the source of that book. It´s also very
+          useful when quickly wanting to add the book to your read-list on the
+          service(if you are logged into the source).
         </h5>
       </div>
       <div className="max-w-6xl mx-2 ">
