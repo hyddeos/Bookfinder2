@@ -37,7 +37,7 @@ else:
 DEBUG = True
 
 
-ALLOWED_HOSTS = [os.environ.get("DJANGO_TRUSTED_URLS")]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
