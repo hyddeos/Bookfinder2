@@ -34,6 +34,8 @@ if os.environ.get("IN_PRODUCTION"):
 else:
     DEBUG = True
 
+DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
