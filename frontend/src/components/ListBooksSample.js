@@ -16,8 +16,6 @@ export default function ListBooksSample() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("data", data);
-
         const jsondata = JSON.parse(data.books);
         setBooks(jsondata);
       })

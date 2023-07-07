@@ -9,7 +9,4 @@ urlpatterns = [
     path("samplebooks", views.sample_books),
     path("browse", views.browselist),
     path("bookaction", views.handle_book_action),
-    # path("readlist", views.readlist),
-    # path("maybelist", views.maybelist),
-    # path("notlist", views.notlist),
 ]

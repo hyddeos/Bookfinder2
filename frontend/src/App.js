@@ -7,6 +7,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./Pages/Home";
 import BookHunt from "./Pages/BookHunt";
+import ReadList from "./Pages/ReadList";
+import MaybeList from "./Pages/MaybeList";
+import NotList from "./Pages/NotList";
 
 function App() {
   const [csrfToken, setCsrfToken] = useState("");
@@ -21,7 +24,7 @@ function App() {
         const token = data.csrftoken;
         setCsrfToken(token);
       } catch (error) {
-        console.error("Error fetching CSRF token:", error);
+        console.error("Error fetching CSRF token.....:", error);
       }
     };
 
@@ -66,6 +69,21 @@ function App() {
                 exact
                 path="/bookhunt"
                 element={<BookHunt csrfToken={csrfToken} />}
+              />
+              <Route
+                exact
+                path="/readlist"
+                element={<ReadList csrfToken={csrfToken} />}
+              />
+              <Route
+                exact
+                path="/maybelist"
+                element={<MaybeList csrfToken={csrfToken} />}
+              />
+              <Route
+                exact
+                path="/notlist"
+                element={<NotList csrfToken={csrfToken} />}
               />
             </Routes>
           </div>

@@ -26,16 +26,19 @@ export default function Home(props) {
     if (accessToken) {
       headers["accesstoken"] = accessToken;
     }
+    const data = { list: props.list };
 
     fetch(url, {
       method: "POST",
       headers: headers,
+      body: JSON.stringify(data),
     })
       .then((response) => response.json())
       .then((data) => {
         setBooks(data.books);
         setPages(data.pages);
         setTotalBooks(data.total_books);
+        listViewCheck();
       })
       .catch((error) => {
         console.error(error);
@@ -93,6 +96,32 @@ export default function Home(props) {
       }
     }
     updateBook(key, list);
+  }
+
+  React.useEffect(() => {
+    listViewCheck();
+  }, [books]);
+  console.log("props.", props);
+
+  function listViewCheck() {
+    if (props.list === "read") {
+      console.log("True!", books);
+      console.log("b4", readThis);
+      books.forEach((book) => {
+        setReadThis((prevReadThis) => [...prevReadThis, book.pk]);
+      });
+      console.log("after", readThis);
+    } else if (props.list === "maybe") {
+      console.log("Maybe!");
+      books.forEach((book) => {
+        setReadMaybe((prevReadMaybe) => [...prevReadMaybe, book.pk]);
+      });
+    } else if (props.list === "not") {
+      console.log("not!");
+      books.forEach((book) => {
+        setReadNot((prevReadNot) => [...prevReadNot, book.pk]);
+      });
+    }
   }
 
   return (
