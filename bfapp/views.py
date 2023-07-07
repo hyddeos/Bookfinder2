@@ -14,6 +14,9 @@ from bfapp.assets.bookbeat_scraper import get_books
 from bfapp.assets.load_from_db import load_sample_books
 from bfapp.assets.load_from_db import load_filterd_books
 
+import os
+from dotenv import load_dotenv
+
 # Models
 from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 
@@ -21,6 +24,16 @@ from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 # Create your views here.
 def index(request):
     csrf_token = get_token(request)
+    User = get_user_model()
+    if not User.objects.filter(username=os.environ.get("SUPER_USERNAME")).exists():
+        User.objects.create_superuser(
+            os.environ.get("SUPER_USERNAME"),
+            os.environ.get("SUPER_EMAIL"),
+            os.environ.get("SUPER_PASSWORD"),
+        )
+        print("Superuser created successfully.")
+    else:
+        print("Superuser already exists.")
     response_data = {
         # "serialized_data": serialized_data,
         "csrftoken": csrf_token,
