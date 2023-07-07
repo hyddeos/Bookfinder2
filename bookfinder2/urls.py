@@ -17,6 +17,7 @@ from django import urls
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from dotenv import load_dotenv
 import os
@@ -28,3 +29,4 @@ urlpatterns = [
     path("", include("bfapp.urls")),
     path(os.environ.get("DJANGO_ADMIN_URL"), admin.site.urls),
 ]
+urlpatterns += staticfiles_urlpatterns()

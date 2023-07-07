@@ -25,11 +25,11 @@ from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 def index(request):
     csrf_token = get_token(request)
     User = get_user_model
-    User.objects.create_superuser(
-        os.environ.get("SUPER_USERNAME"),
-        os.environ.get("SUPER_EMAIL"),
-        os.environ.get("SUPER_PASSWORD"),
-    )
+    username = os.environ.get("SUPER_USERNAME")  # Replace with the desired username
+    password = os.environ.get("SUPER_PASSWORD")  # Replace with the desired password
+    email = os.environ.get("SUPER_EMAIL")  # Replace with the desired email
+    User.objects.create_superuser(username=username, password=password, email=email)
+
     print("Superuser created successfully.")
 
     response_data = {
