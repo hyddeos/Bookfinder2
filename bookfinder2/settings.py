@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from django.contrib.auth import get_user_model
 
 # Initialise environment variables
 load_dotenv()
@@ -35,6 +36,17 @@ else:
     DEBUG = True
 
 DEBUG = True
+
+User = get_user_model()
+if not User.objects.filter(username=os.environ.get("SUPER_USERNAME")).exists():
+    User.objects.create_superuser(
+        os.environ.get("SUPER_USERNAME"),
+        os.environ.get("SUPER_EMAIL"),
+        os.environ.get("SUPER_PASSWORD"),
+    )
+    print("Superuser created successfully.")
+else:
+    print("Superuser already exists.")
 
 
 ALLOWED_HOSTS = ["*"]
