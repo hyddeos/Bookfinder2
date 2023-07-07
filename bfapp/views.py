@@ -24,16 +24,14 @@ from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 # Create your views here.
 def index(request):
     csrf_token = get_token(request)
-    User = get_user_model()
-    if not User.objects.filter(username=os.environ.get("SUPER_USERNAME")).exists():
-        User.objects.create_superuser(
-            os.environ.get("SUPER_USERNAME"),
-            os.environ.get("SUPER_EMAIL"),
-            os.environ.get("SUPER_PASSWORD"),
-        )
-        print("Superuser created successfully.")
-    else:
-        print("Superuser already exists.")
+    User = get_user_model
+    User.objects.create_superuser(
+        os.environ.get("SUPER_USERNAME"),
+        os.environ.get("SUPER_EMAIL"),
+        os.environ.get("SUPER_PASSWORD"),
+    )
+    print("Superuser created successfully.")
+
     response_data = {
         # "serialized_data": serialized_data,
         "csrftoken": csrf_token,
