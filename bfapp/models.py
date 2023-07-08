@@ -8,14 +8,6 @@ from django.contrib.auth.models import User, AbstractUser
 User = get_user_model()
 
 
-class User(AbstractUser):
-    groups = None
-    user_permissions = None
-
-    def __str__(self):
-        return self.username
-
-
 class CustomUser(AbstractUser):
     groups = None
     user_permissions = None
