@@ -87,6 +87,7 @@ CORS_ALLOW_HEADERS = [
     "hx-current-url",
     "hx-target",
     "accesstoken",
+    "Access-Control-Allow-Origin",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
