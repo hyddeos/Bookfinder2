@@ -67,13 +67,11 @@ MIDDLEWARE = [
 
 CSRF_COOKIE_SECURE = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
-
 CORS_ALLOWED_ORIGINS = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
 CSRF_TRUSTED_ORIGINS = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
 CORS_ORIGIN_WHITELIST = [os.environ.get("DJANGO_TRUSTED_URLS")]
-
 
 CORS_ALLOW_HEADERS = [
     "accept",
@@ -90,6 +88,8 @@ CORS_ALLOW_HEADERS = [
     "hx-target",
     "accesstoken",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 CSRF_COOKIE_NAME = "csrftoken"
 CSRF_COOKIE_HTTPONLY = True
