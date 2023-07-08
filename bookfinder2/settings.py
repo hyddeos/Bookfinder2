@@ -91,7 +91,7 @@ CORS_ALLOW_HEADERS = [
     "Access-Control-Allow-Credentials",
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_COOKIE_NAME = "csrftoken"
 CSRF_COOKIE_HTTPONLY = True

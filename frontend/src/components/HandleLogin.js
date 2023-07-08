@@ -2,7 +2,7 @@ import React from "react";
 import Cookies from "js-cookie";
 
 import { API_URL } from "../constants";
-import { FRONTEND_URL } from "../constants";
+
 
 export default function HandleLogin(props) {
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -24,8 +24,7 @@ export default function HandleLogin(props) {
       headers: {
         "Content-Type": "application/json",
         "X-CSRFToken": csrftoken,
-        "Access-Control-Allow-Origin": { FRONTEND_URL },
-        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin":
       },
       body: JSON.stringify(formData),
     })
