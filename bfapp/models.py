@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import User
 
 User = get_user_model()
 
