@@ -3,9 +3,17 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 
 User = get_user_model()
+
+
+class CustomUser(AbstractUser):
+    groups = None
+    user_permissions = None
+
+    def __str__(self):
+        return self.pk, self.username
 
 
 class AccessToken(models.Model):
