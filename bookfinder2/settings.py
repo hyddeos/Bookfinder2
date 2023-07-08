@@ -37,7 +37,7 @@ else:
 
 DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOST")
+ALLOWED_HOSTS = [os.environ.get("DJANGO_ALLOWED_HOST")]
 
 
 # Application definition
@@ -65,14 +65,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CSRF_COOKIE_SECURE = os.environ.get("DJANGO_TRUSTED_URLS", "").split(",")
+CSRF_COOKIE_SECURE = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
 
-CORS_ALLOWED_ORIGINS = os.environ.get("DJANGO_TRUSTED_URLS", "").split(",")
+CORS_ALLOWED_ORIGINS = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
-CSRF_TRUSTED_ORIGINS = os.environ.get("DJANGO_TRUSTED_URLS", "").split(",")
+CSRF_TRUSTED_ORIGINS = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
-CORS_ORIGIN_WHITELIST = os.environ.get("DJANGO_TRUSTED_URLS", "").split(",")
+CORS_ORIGIN_WHITELIST = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
 
 CORS_ALLOW_HEADERS = [
