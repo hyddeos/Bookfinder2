@@ -37,7 +37,7 @@ else:
 
 DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get("DJANGO_ALLOWED_HOST")]
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOST")
 
 
 # Application definition
