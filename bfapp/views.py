@@ -24,13 +24,11 @@ from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 
 # Create your views here.
 def index(request):
-    test = [os.environ.get("DJANGO_TRUSTED_URLS")]
     csrf_token = get_token(request)
 
     response_data = {
         # "serialized_data": serialized_data,
         "csrftoken": csrf_token,
-        "test": test,
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
@@ -93,8 +91,8 @@ def update_books(request):
             return JsonResponse({"message": "CSRF token not provided"}, status=403)
         access_token = request.META.get("HTTP_AUTHORIZATION", "").split(" ")[1]
         try:
-            user = AccessToken.objects.get(access_token=access_token)
-            if user.username == "hydde":  # Fix usergroup for this
+            token_user = AccessToken.objects.get(access_token=access_token).user
+            if token_user.username == "hydde":  # Fix usergroup for this
                 print("--Starting update--")
                 get_books()
                 print("--UPDATE DONE--")

@@ -8,14 +8,6 @@ from django.contrib.auth.models import User, AbstractUser
 User = get_user_model()
 
 
-class CustomUser(AbstractUser):
-    groups = None
-    user_permissions = None
-
-    def __str__(self):
-        return self.pk, self.username
-
-
 class AccessToken(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     access_token = models.CharField(max_length=255)
