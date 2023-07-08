@@ -5,7 +5,6 @@ from bfapp.models import (
     Publisher,
     UserBook,
     UserList,
-    CustomUser,
     AccessToken,
 )
 
@@ -16,5 +15,4 @@ admin.site.register(Genre)
 admin.site.register(Publisher)
 admin.site.register(UserBook)
 admin.site.register(UserList)
-admin.site.register(CustomUser)
 admin.site.register(AccessToken)
