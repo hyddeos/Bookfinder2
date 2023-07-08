@@ -24,15 +24,13 @@ from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 
 # Create your views here.
 def index(request):
-    test = [os.environ.get("DJANGO_TRUSTED_URLS", "").split(",")]
-    test2 = [os.environ.get("DJANGO_TRUSTED_URLS", "").split(",")]
+    test = [os.environ.get("DJANGO_TRUSTED_URLS")]
     csrf_token = get_token(request)
 
     response_data = {
         # "serialized_data": serialized_data,
         "csrftoken": csrf_token,
         "test": test,
-        "test2": test2,
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
