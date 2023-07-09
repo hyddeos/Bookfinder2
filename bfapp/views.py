@@ -13,7 +13,7 @@ from bfapp.assets.bookbeat_scraper import get_books
 from bfapp.assets.load_from_db import load_sample_books
 from bfapp.assets.load_from_db import load_filterd_books
 
-import asyncio
+import threading
 
 
 # Models
@@ -92,7 +92,8 @@ def update_books(request):
             if token_user.username == "hydde":  # Fix usergroup for this
                 print("--Starting update--")
                 # Run get_books() in the background using asyncio
-                get_books()
+                background_thread = threading.Thread(target=get_books)
+                background_thread.start()
                 print("--UPDATE STARTED--")
                 context = {
                     "message": "updating books started, check back later",
