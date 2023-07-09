@@ -101,23 +101,17 @@ export default function Home(props) {
   React.useEffect(() => {
     listViewCheck();
   }, [books]);
-  console.log("props.", props);
 
   function listViewCheck() {
     if (props.list === "read") {
-      console.log("True!", books);
-      console.log("b4", readThis);
       books.forEach((book) => {
         setReadThis((prevReadThis) => [...prevReadThis, book.pk]);
       });
-      console.log("after", readThis);
     } else if (props.list === "maybe") {
-      console.log("Maybe!");
       books.forEach((book) => {
         setReadMaybe((prevReadMaybe) => [...prevReadMaybe, book.pk]);
       });
     } else if (props.list === "not") {
-      console.log("not!");
       books.forEach((book) => {
         setReadNot((prevReadNot) => [...prevReadNot, book.pk]);
       });

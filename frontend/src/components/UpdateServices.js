@@ -3,7 +3,7 @@ import { API_URL } from "../constants";
 
 export default function UpdateServices(props) {
   const accessToken = Cookies.get("access_token");
-  console.log("cshtr token");
+  console.log("Started updating");
 
   fetch(`${API_URL}/updateservices`, {
     method: "POST",

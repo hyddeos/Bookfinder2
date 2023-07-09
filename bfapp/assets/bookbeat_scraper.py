@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 from bfapp.assets.save_to_db import save_book
-from models import Book
+from bfapp.models import Book
 
 
 def get_books():
