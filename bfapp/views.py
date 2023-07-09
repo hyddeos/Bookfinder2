@@ -92,7 +92,7 @@ def update_books(request):
             if token_user.username == "hydde":  # Fix usergroup for this
                 print("--Starting update--")
                 # Run get_books() in the background using asyncio
-                # get_books()
+                get_books()
                 print("--UPDATE STARTED--")
                 context = {
                     "message": "updating books started, check back later",
