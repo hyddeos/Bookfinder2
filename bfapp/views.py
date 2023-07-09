@@ -22,8 +22,10 @@ from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
 
 # Create your views here.
 def index(request):
+    csrf_token = get_token(request)
     response_data = {
-        "message": "Welcome, but there is nothing to see here",
+        "csrftoken": csrf_token,
+        "message": "Welcome, but there is nothing to see here except a token",
     }
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
