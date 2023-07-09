@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { API_URL } from "../constants";
+import { FRONTEND_URL } from "../constants";
 
 export default function UpdateServices(props) {
   const accessToken = Cookies.get("access_token");

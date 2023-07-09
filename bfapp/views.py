@@ -13,10 +13,8 @@ from bfapp.assets.bookbeat_scraper import get_books
 from bfapp.assets.load_from_db import load_sample_books
 from bfapp.assets.load_from_db import load_filterd_books
 
-import os
-from dotenv import load_dotenv
+import asyncio
 
-load_dotenv()
 
 # Models
 from bfapp.models import AccessToken, UserBook, UserList, Publisher, Book
@@ -80,8 +78,7 @@ def handle_logout(request):
 
 
 # Update the books from the book services
-@csrf_exempt
-def update_books(request):
+async def update_books(request):
     if request.method == "POST":
         csrf_token = request.META.get("HTTP_X_CSRFTOKEN")
         if not csrf_token:
@@ -91,9 +88,10 @@ def update_books(request):
             token_user = AccessToken.objects.get(access_token=access_token).user
             if token_user.username == "hydde":  # Fix usergroup for this
                 print("--Starting update--")
-                get_books()
-                print("--UPDATE DONE--")
-                return HttpResponse("Update completed")
+                # Run get_books() in the background using asyncio
+                asyncio.create_task(get_books())
+                print("--UPDATE STARTED--")
+                return HttpResponse("Update working in background, come back later")
         except AccessToken.DoesNotExist:
             return HttpResponse("Unauthorized", status=401)
 
