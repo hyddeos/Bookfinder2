@@ -92,9 +92,12 @@ def update_books(request):
             if token_user.username == "hydde":  # Fix usergroup for this
                 print("--Starting update--")
                 # Run get_books() in the background using asyncio
-                get_books()
+                # get_books()
                 print("--UPDATE STARTED--")
-                return HttpResponse("Update working in background, come back later")
+                context = {
+                    "message": "updating books started, check back later",
+                }
+                return JsonResponse(context, safe=False)
         except AccessToken.DoesNotExist:
             return HttpResponse("Unauthorized", status=401)
 

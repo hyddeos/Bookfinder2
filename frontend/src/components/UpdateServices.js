@@ -14,9 +14,6 @@ export default function UpdateServices(props) {
     },
   })
     .then((response) => response.json())
-    .then((data) => {
-      console.log("Updated");
-    })
     .catch((error) => {
       console.error(error);
     });

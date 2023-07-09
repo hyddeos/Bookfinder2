@@ -23,6 +23,7 @@ function App() {
         const data = await response.json();
         const token = data.csrftoken;
         setCsrfToken(token);
+        console.log("new Token", token);
       } catch (error) {
         console.error("Error fetching CSRF token.....:", error);
       }
