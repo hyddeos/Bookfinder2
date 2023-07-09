@@ -12,9 +12,7 @@ export default function UpdateServices(props) {
       "X-CSRFToken": props.csrftoken,
       Authorization: `Bearer ${accessToken}`,
     },
-  })
-    .then((response) => response.json())
-    .catch((error) => {
-      console.error(error);
-    });
+  }).catch((error) => {
+    console.error(error);
+  });
 }
