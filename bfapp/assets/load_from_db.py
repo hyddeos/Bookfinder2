@@ -6,7 +6,7 @@ from django.http import JsonResponse
 
 
 def load_sample_books():
-    sample_book_ids = [1, 2, 3, 3, 5, 6]
+    sample_book_ids = [1097, 776, 1022, 967, 889, 766]
     books = (
         Book.objects.filter(id__in=sample_book_ids)
         .prefetch_related("publisher")
