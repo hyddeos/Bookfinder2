@@ -73,6 +73,15 @@ CSRF_TRUSTED_ORIGINS = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
 CORS_ORIGIN_WHITELIST = [os.environ.get("DJANGO_TRUSTED_URLS")]
 
+CORS_ALLOWED_ORIGINS = [
+    "https://read-only.example.com",
+    "https://read-and-write.example.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://read-and-write.example.com",
+]
+
 CORS_ALLOW_HEADERS = [
     "accept",
     "accept-encoding",
@@ -91,7 +100,7 @@ CORS_ALLOW_HEADERS = [
     "Access-Control-Allow-Credentials",
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_COOKIE_NAME = "csrftoken"
 CSRF_COOKIE_HTTPONLY = True
