@@ -80,7 +80,8 @@ def handle_logout(request):
 
 
 # Update the books from the book services
-async def update_books(request):
+@csrf_exempt
+def update_books(request):
     if request.method == "POST":
         csrf_token = request.META.get("HTTP_X_CSRFTOKEN")
         if not csrf_token:
@@ -91,7 +92,7 @@ async def update_books(request):
             if token_user.username == "hydde":  # Fix usergroup for this
                 print("--Starting update--")
                 # Run get_books() in the background using asyncio
-                asyncio.create_task(get_books())
+                get_books()
                 print("--UPDATE STARTED--")
                 return HttpResponse("Update working in background, come back later")
         except AccessToken.DoesNotExist:
