@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 from bfapp.assets.save_to_db import save_book
+from models import Book
 
 
 def get_books():
@@ -83,53 +84,50 @@ def scape_books(url):
     passed = 0
     book_counter = 1
     for book_url in books_links:
-        print("link", book_counter, book_url)
-        book_counter = book_counter + 1
-        response = requests.get(book_url)
-        if response.status_code == 200:
-            json_data = response.json()
-            # check if book is long enough
-            audiobook_length = json_data["audiobooklength"]
-            try:
-                if audiobook_length is not None:
-                    if audiobook_length > min_length:
-                        # get genres
-                        genres = [genre["name"] for genre in json_data["genres"]]
-                        # Filter away unwanted genres
-                        unwanted_genre_found = False
-                        for genre in genres:
-                            if genre in unwanted_categories:
-                                unwanted_genre_found = True
-                                break
-                        if unwanted_genre_found:
-                            continue
-                        passed = passed + 1
-                        print("passed", passed)
-                        # Add book
-                        book = {
-                            "title": json_data["title"],
-                            "author": json_data["author"],
-                            "url": json_data["shareurl"],
-                            "cover": json_data["cover"],
-                            "summary": json_data["summary"],
-                            "published": datetime.strptime(
-                                json_data["published"], "%Y-%m-%dT%H:%M:%S%z"
-                            ).strftime("%Y-%m-%d"),
-                            "source_published": datetime.strptime(
-                                json_data["editions"][0]["bookBeatPublishDate"],
-                                "%Y-%m-%dT%H:%M:%S%z",
-                            ).strftime("%Y-%m-%d"),
-                            "genres": genres,
-                            "publisher": json_data["editions"][0]["publisher"],
-                        }
-                        save_book(book, service)  # sends book to save_to_db file.
-            except Exception as e:
-                print(
-                    "An exception occurred:",
-                    str(e),
-                    audiobook_length,
-                    type(audiobook_length),
-                )
-                continue  # Skip to the next iteration
+        if not Book.objects.filter(url=book_url).exists():
+            book_counter = book_counter + 1
+            response = requests.get(book_url)
+            if response.status_code == 200:
+                json_data = response.json()
+                # check if book is long enough
+                audiobook_length = json_data["audiobooklength"]
+                try:
+                    if audiobook_length is not None:
+                        if audiobook_length > min_length:
+                            # get genres
+                            genres = [genre["name"] for genre in json_data["genres"]]
+                            # Filter away unwanted genres
+                            unwanted_genre_found = False
+                            for genre in genres:
+                                if genre in unwanted_categories:
+                                    unwanted_genre_found = True
+                                    break
+                            if unwanted_genre_found:
+                                continue
+                            passed = passed + 1
+                            # Add book
+                            book = {
+                                "title": json_data["title"],
+                                "author": json_data["author"],
+                                "url": json_data["shareurl"],
+                                "cover": json_data["cover"],
+                                "summary": json_data["summary"],
+                                "published": datetime.strptime(
+                                    json_data["published"], "%Y-%m-%dT%H:%M:%S%z"
+                                ).strftime("%Y-%m-%d"),
+                                "source_published": datetime.strptime(
+                                    json_data["editions"][0]["bookBeatPublishDate"],
+                                    "%Y-%m-%dT%H:%M:%S%z",
+                                ).strftime("%Y-%m-%d"),
+                                "genres": genres,
+                                "publisher": json_data["editions"][0]["publisher"],
+                            }
+                            save_book(book, service)  # sends book to save_to_db file.
+                except Exception as e:
+                    print(
+                        "An exception occurred:",
+                        str(e),
+                    )
+                    continue  # Skip to the next iteration
         else:
             print("Request failed with status code:", response.status_code)
